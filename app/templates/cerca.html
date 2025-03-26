@@ -1,0 +1,30 @@
+{% extends "form.html" %}
+
+{% block content %}
+<h1>Ricerca</h1>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Ricerca</h1>
+    <form action="/find" class="d-flex" role="search">
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" value="autore" id="flexRadioDefault1" disabled>
+            <label class="form-check-label" for="flexRadioDefault1">
+                Autore
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" value="titolo" id="flexRadioDefault2"
+                checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+                Titolo
+            </label>
+        </div>
+
+        <div class="input-group mb-3">
+            <input class="form-control me-2" type="search" name="ricerca" placeholder="Cerca..." aria-label="Cerca"
+                required>
+            <button class="btn btn-primary" type="submit">Cerca</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

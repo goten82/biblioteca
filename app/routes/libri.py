@@ -91,3 +91,19 @@ def elimina_libro(id):
     db.session.delete(libro)  # Elimina l'utente dal database
     db.session.commit()
     return jsonify({"message": "Libro eliminato con successo!"})
+
+@libri_bp.route('/cerca',methods=['GET'])
+def cerca():
+    return render_template('cerca.html')
+
+@libri_bp.route('/find',methods=['GET'])
+def find():
+    to_research = request.args['ricerca']
+    tipoRicerca = request.args['flexRadioDefault']
+    
+    if(tipoRicerca=='titolo'):
+        libri = Libri.query.filter(Libri.titolo.ilike(f"%{to_research}%")).all()
+    # else:
+    #     libri = Libri.query.filter(Libri.autore.ilike(f"%{to_research}%")).all()
+    
+    return render_template('libri.html',libri=libri)
