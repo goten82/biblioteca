@@ -3,6 +3,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
+class Autori(db.Model):
+    __tablename__ = 'autori'
+    id_autori = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(50), nullable=False)
+    cognome = db.Column(db.String(50), nullable=False)
+    libri = db.relationship('Libri', backref='autore', lazy=True)
+    
 class Libri(db.Model):
     __tablename__ = 'libri'
     id_libri = db.Column(db.Integer, primary_key=True)
@@ -13,12 +20,7 @@ class Libri(db.Model):
     id_autore = db.Column(db.Integer, db.ForeignKey('autori.id_autori'), nullable=False)
     prestiti = db.relationship('Prestiti', backref='libro', lazy=True)
 
-class Autori(db.Model):
-    __tablename__ = 'autori'
-    id_autori = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(50), nullable=False)
-    cognome = db.Column(db.String(50), nullable=False)
-    libri = db.relationship('Libri', backref='autore', lazy=True)
+
 
 class Bibliotecari(db.Model):
     __tablename__ = 'bibliotecari'

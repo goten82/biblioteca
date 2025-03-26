@@ -1,6 +1,5 @@
-from flask import Blueprint,render_template,request,flash,redirect,url_for
-from sqlalchemy import null
-from app.models.models import Libri,db
+from flask import Blueprint,render_template,request,flash,redirect,url_for,jsonify
+from app.models.models import Libri,Autori,db
 
 libri_bp = Blueprint('libri', __name__)
 
@@ -11,18 +10,27 @@ def get_libri():
 
 @libri_bp.route('/inserisci_libro',methods=['GET'])
 def inserisci_libro():
-    return render_template('gestione_libro.html',libro=None)
+    autori = Autori.query.all()
+    return render_template('gestione_libro.html',libro=None, autore=None,autori=autori)
 
 @libri_bp.route('/inserisci_libro',methods=['POST'])
 def insert_libro():
     
-    titolo=request.form['titolo'] 
-   
+    titolo=request.form['titolo']    
     isbn=request.form['isbn'] 
     anno_pubblicazione=request.form['anno_pubblicazione'] 
     copie_disponibili=request.form['copie_disponibili']
 
     id_autore = request.form.get('id_autore', None)
+    nome =  request.form.get('nome')
+    cognome = request.form.get('cognome')
+    if nome and cognome:
+        autore = Autori.query.filter_by(nome=nome,cognome=cognome).first()
+        if not autore:
+            autore = Autori(nome=nome,cognome=cognome)
+            db.session.add(autore)
+            db.session.commit()
+        id_autore = autore.id_autori
 
     # Converti id_autore in intero solo se è un valore valido
     if id_autore:
@@ -45,8 +53,10 @@ def insert_libro():
 
 @libri_bp.route('/modifica_libri/<int:id>',methods=['GET'])
 def modifica_libri(id):
-    libro = Libri.query.first_or_404(id)
-    return render_template('gestione_libro.html',libro=libro)
+    libro = Libri.query.get_or_404(id)
+    autore = Autori.query.get(libro.id_autore)
+    autori = Autori.query.all()
+    return render_template('gestione_libro.html',libro=libro, autore=autore,autori=autori)
 
 @libri_bp.route('/modifica_libri/<int:id>',methods=['POST'])
 def update_libro(id):
@@ -54,16 +64,30 @@ def update_libro(id):
 
      # Aggiorna i campi dell'utente    
     libro.titolo=request.form['titolo'] 
-    libro.autore_id=request.form['id_autore']
+    
     libro.isbn=request.form['isbn'] 
     libro.anno_pubblicazione=request.form['anno_pubblicazione'] 
     libro.copie_disponibili=request.form['copie_disponibili']
+    nome = request.form.get('nome')
+    cognome = request.form.get('cognome')
+    if nome and cognome:
+        autore = Autori.query.filter_by(nome=nome,cognome=cognome).first()
+        if not autore:
+            autore = Autori(nome=nome,cognome=cognome)
+            db.session.add(autore)
+            db.session.commit()
+        id_autore = autore.id_autori
+
+    libro.id_autore= id_autore if nome and cognome else request.form['id_autori']
 
     
     db.session.commit()  # Salva le modifiche nel database
     flash("Libro aggiornato con successo!", "success")
     return redirect(url_for('libri.get_libri'))
 
-@libri_bp.route('/elimina_libro',methods=['DELETE'])
-def elimina_libro():
-    pass
+@libri_bp.route('/elimina_libro/<int:id>',methods=['DELETE'])
+def elimina_libro(id):
+    libro = Libri.query.get_or_404(id)
+    db.session.delete(libro)  # Elimina l'utente dal database
+    db.session.commit()
+    return jsonify({"message": "Libro eliminato con successo!"})

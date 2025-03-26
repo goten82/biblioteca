@@ -16,23 +16,20 @@
     </div>
     <div class="mb-3">
         <label for="autore" class="form-label">Autore</label>
-        <select class="form-control" id="autore" name="autore_id">
+        <select class="form-control" id="autore" name="id_autori" onchange="svuotaCampi()">
             <option value="" selected>Scegli un autore esistente</option>
             {% for author in autori %}
-            <option value="{{ author.id }}">{{ author.nome }} {{author.cognome}}</option>
+            <option value="{{ author.id_autori }}">{{ author.nome }} {{author.cognome}}</option>
             {% endfor %}
         </select>
     </div>
     <div class="mb-3">
         <label for="new_author" class="form-label">O aggiungi un nuovo autore</label>
-        <input type="text" class="form-control" id="new_author" name="nome" placeholder="Nome...">
-        <input type="text" class="form-control" id="new_author" name="cognome" placeholder="Cognome...">
+        <input type="text" class="form-control" id="new_author_nome" name="nome" placeholder="Nome..."
+            value="{{autore.nome | default()}}">
+        <input type="text" class="form-control" id="new_author_cognome" name="cognome" placeholder="Cognome..."
+            value="{{autore.cognome | default()}}">
     </div>
-    <!-- <div class="mb-3">
-        <label for="autore" class="form-label">Autore</label>
-        <input class="form-control" type="text" name="autore" id="id_autore" value="{{libro.id_autore | default()}}">
-        <input type="hidden" name="id_autore" value="{{libro.id_autore}}">
-    </div> -->
     <div class="mb-3">
         <label for="isbn" class="form-label">ISBN</label>
         <input class="form-control" type="text" id="isbn" name="isbn" value="{{libro.isbn | default()}}">
@@ -54,7 +51,7 @@
     <button type="submit" class="btn btn-primary">Inserisci</button>
     {% endif %}
 
-    <a href="/libri"class="btn btn-secondary">Chiudi</a>
+    <a href="/libri" class="btn btn-secondary">Chiudi</a>
 </form>
 
 

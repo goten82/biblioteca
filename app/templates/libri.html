@@ -17,13 +17,13 @@
         {% for libro in libri %}
         <tr>
             <td>{{ libro.titolo }}</td>
-            <td>{{ libro.autore }}</td>
+            <td>{{ libro.autore.nome }} {{ libro.autore.cognome }}</td>
             <td>{{ libro.anno_pubblicazione }}</td>
-            <td>{{libro.copie_disponibili}}</td>
+            <td>{{ libro.copie_disponibili }}</td>
             <td>
                 <a href="{{ url_for('libri.modifica_libri', id=libro.id_libri) }}"
-                    class="btn btn-primary btn-sm">Modifica</a>
-                <a href="#" class="btn btn-danger btn-sm">Elimina</a>
+                    class="btn btn-primary btn-sm">Modifica <i class="bi bi-pencil-square"></i></a>
+                <a href="#" onclick="eliminaLibro({{ libro.id_libri }});" class="btn btn-danger btn-sm">Elimina <i class="bi bi-trash3"></i></a>
             </td>
         </tr>
         {% endfor %}
