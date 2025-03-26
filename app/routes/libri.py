@@ -103,7 +103,7 @@ def find():
     
     if(tipoRicerca=='titolo'):
         libri = Libri.query.filter(Libri.titolo.ilike(f"%{to_research}%")).all()
-    # else:
-    #     libri = Libri.query.filter(Libri.autore.ilike(f"%{to_research}%")).all()
+    else:
+        libri = (db.session.query(Libri).join(Autori).filter((Autori.nome.ilike(f"%{to_research}%")) | (Autori.cognome.ilike(f"%{to_research}%"))).all())
     
     return render_template('libri.html',libri=libri)
