@@ -1,0 +1,35 @@
+{% extends "form.html" %}
+
+{% block content %}
+<h1>Elenco libri</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Titolo</th>
+            <th>Autore</th>
+            <th>Anno</th>
+            <th>Copie disponibili</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for libro in libri %}
+        <tr>
+            <td>{{ libro.titolo }}</td>
+            <td>{{ libro.autore }}</td>
+            <td>{{ libro.anno_pubblicazione }}</td>
+            <td>{{libro.copie_disponibili}}</td>
+            <td>
+                <a href="{{ url_for('libri.modifica_libri', id=libro.id_libri) }}"
+                    class="btn btn-primary btn-sm">Modifica</a>
+                <a href="#" class="btn btn-danger btn-sm">Elimina</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="/inserisci_libro" class="btn btn-primary">Inserisci</a>
+<a href="/home" class="btn btn-secondary">Chiudi</a>
+
+{% endblock %}

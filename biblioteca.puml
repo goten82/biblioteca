@@ -1,0 +1,50 @@
+@startuml Biblioteca
+'Entità coinvolte
+package "Entità" {
+
+
+entity Bibliotecari {
+    + id_bibliotecari: INT <<PK>>
+    nome: VARCHAR
+    cognome: VARCHAR
+    username: VARCHAR UNIQUE NOT NULL
+    password: VARCHAR
+}
+
+entity Utenti {
+    + id_utenti: INT <<PK>>
+    nome: VARCHAR
+    cognome: VARCHAR
+    email: VARCHAR
+}
+
+entity Libri {
+    + id_libri: INT <<PK>>
+    titolo: VARCHAR
+    id_autore: INT<<FK>>
+    anno_pubblicazione: INT
+    isbn: VARCHAR
+    disponibile: BOOLEAN
+}
+
+entity Prestiti {
+    + id_prestiti: INT <<PK>>
+    id_utenti: INT <<FK>>
+    id_libri: INT <<FK>>
+    data_prestito: DATE
+    data_restituzione: DATE
+}
+
+entity Autori {
+    + id_autore : INT<<PK>>
+    nome: VARCHAR
+    cognome: VARCHAR
+}
+
+Bibliotecari ||--|| Utenti : "gestisce"
+Bibliotecari <--> Libri : "gestisce"
+Utenti ||--o{ Prestiti : "effettua"
+Libri ||--o{ Prestiti : "è prestato"
+Autori }|--|{ Libri : ""
+}
+@enduml

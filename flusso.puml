@@ -1,0 +1,12 @@
+@startuml Flusso
+
+actor Utente as F2
+actor Bibliotecario as F1
+participant Prestito as L
+
+ F2 -> F1: Chiede libro in prestito
+ F1 --> L: Verifica se libro presente
+ L--> F1: Se non presente segna il prestito
+ F1 -> F2: Consegna il libro
+
+@enduml

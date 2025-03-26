@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Biblioteca</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Libri
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/libri">Elenco libri</a></li>
+                            <li><a class="dropdown-item" href="/inserisci_libro">Inserisci libro</a></li>
+                            <li><a class="dropdown-item" href="/cerca">Cerca...</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Prestiti</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Content Section -->
+    <div class="container mt-4">
+        {% block content %}
+
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-center mb-4">Benvenuti nella biblioteca</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Catalogo dei libri</h5>
+                            <p class="card-text">Esplora la nostra collezione di libri.</p>
+                            <a href="/libri" class="btn btn-primary">Vai al catalogo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Presiti</h5>
+                            <p class="card-text">Gestisci i tuoi prestiti e resi.</p>
+                            <a href="#" class="btn btn-primary">Gestione prestiti</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Profilo</h5>
+                            <p class="card-text">Accedi alle tue informazioni personali.</p>
+                            <a href="#" class="btn btn-primary">Accedi</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        {% endblock %}
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p>© 2025 Biblioteca. Tutti i diritti sono riservati.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

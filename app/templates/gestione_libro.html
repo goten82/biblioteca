@@ -1,0 +1,61 @@
+{% extends "form.html" %}
+
+{% block content %}
+
+{% if libro is not none %}
+<h1>Modifica libro</h1>
+{% endif %}
+{% if libro is none %}
+<h1>Inserisci libro </h1>
+{% endif %}
+
+<form action="" method="post">
+    <div class="mb-3">
+        <label for="titolo" class="form-label">Titolo</label>
+        <input class="form-control" type="text" name="titolo" id="titolo" value="{{libro.titolo | default() }}">
+    </div>
+    <div class="mb-3">
+        <label for="autore" class="form-label">Autore</label>
+        <select class="form-control" id="autore" name="autore_id">
+            <option value="" selected>Scegli un autore esistente</option>
+            {% for author in autori %}
+            <option value="{{ author.id }}">{{ author.nome }} {{author.cognome}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="new_author" class="form-label">O aggiungi un nuovo autore</label>
+        <input type="text" class="form-control" id="new_author" name="nome" placeholder="Nome...">
+        <input type="text" class="form-control" id="new_author" name="cognome" placeholder="Cognome...">
+    </div>
+    <!-- <div class="mb-3">
+        <label for="autore" class="form-label">Autore</label>
+        <input class="form-control" type="text" name="autore" id="id_autore" value="{{libro.id_autore | default()}}">
+        <input type="hidden" name="id_autore" value="{{libro.id_autore}}">
+    </div> -->
+    <div class="mb-3">
+        <label for="isbn" class="form-label">ISBN</label>
+        <input class="form-control" type="text" id="isbn" name="isbn" value="{{libro.isbn | default()}}">
+    </div>
+    <div class="mb-3">
+        <label for="anno" class="form-label">Anno pubblicazione</label>
+        <input class="form-control" type="number" id="anno" name="anno_pubblicazione"
+            value="{{libro.anno_pubblicazione | default()}}">
+    </div>
+    <div class="mb-3">
+        <label for="copie" class="form-label">Copie disponibili</label>
+        <input class="form-control" type="number" id="copie" name="copie_disponibili"
+            value="{{libro.copie_disponibili | default()}}">
+    </div>
+    {% if libro is not none %}
+    <button type="submit" class="btn btn-primary">Salva</button>
+    {% endif %}
+    {% if libro is none %}
+    <button type="submit" class="btn btn-primary">Inserisci</button>
+    {% endif %}
+
+    <a href="/libri"class="btn btn-secondary">Chiudi</a>
+</form>
+
+
+{% endblock %}
