@@ -11,3 +11,7 @@ def interfaccia():
     bib = Bibliotecari.query.all()
     return render_template('bibliotecari.html', bibliotecari=bib)
 
+@bibliotecari_bp.route('/bibliotecari/<int:bibliotecari_id>',methods=['GET'])
+def bibliotecari_id(bibliotecari_id):
+    bib = Bibliotecari.query.get(bibliotecari_id)
+    return render_template('pagina_personale.html', bibliotecari=bib)

@@ -1,0 +1,26 @@
+{% extends "form.html" %}
+
+{% block content %}
+
+<h1>Le mie informazioni</h1>
+
+<div class="mb-4">
+    <div class="mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="nome" name="nome" value="{{bibliotecari.nome}}">
+    </div>
+    <div class="mb-3">
+        <label for="cognome" class="form-label">Cognome</label>
+        <input type="text" class="form-control" id="cognome" name="cognome" value="{{bibliotecari.cognome}}">
+    </div>
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" value="{{bibliotecari.username}}">
+    </div>
+    <div class="mb-3">
+        <label for="password_hash" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password_hash" name="password" value="{{bibliotecari.password_hash}}">
+    </div>
+</div>
+<a href="/home" class="btn btn-secondary">Chiudi</a>
+{% endblock %}
