@@ -1,0 +1,26 @@
+{% extends "form.html" %}
+
+{% block content %}
+<h2>Registrati come Bibliotecario</h2>
+<form class="mb-4" action="{{ url_for('auth.register') }}" method="POST">
+    <div class="mb-3">
+        <label class="form-label" for="nome">Nome:</label>
+        <input class="form-control" type="text" name="nome" id="nome" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="cognome">Cognome:</label>
+        <input class="form-control" type="text" name="cognome" id="cognome" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="username">Username:</label>
+        <input class="form-control" type="text" name="username" id="username" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="password">Password:</label>
+        <input class="form-control" type="password" name="password" id="password" required>
+    </div>
+    <button class="btn btn-primary" type="submit">Registrati</button>
+</form>
+
+<p>Hai già un account? <a href="{{ url_for('auth.login') }}">Effettua il login</a></p>
+{% endblock %}

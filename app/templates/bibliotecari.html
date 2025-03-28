@@ -1,0 +1,34 @@
+{% extends "form.html" %}
+
+{% block content %}
+
+<h1>Bibliotecari</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Username</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bibliotecario in bibliotecari %}
+        <tr>
+            <td>{{ bibliotecario.id_bibliotecari }}</td>
+            <td>{{ bibliotecario.nome }}</td>
+            <td>{{ bibliotecario.cognome }}</td>
+            <td>{{ bibliotecario.username }}</td>
+            <td>.
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

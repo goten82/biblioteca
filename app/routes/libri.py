@@ -1,19 +1,23 @@
 from flask import Blueprint,render_template,request,flash,redirect,url_for,jsonify
 from app.models.models import Libri,Autori,db
+from app.decorators import login_required
 
 libri_bp = Blueprint('libri', __name__)
 
 @libri_bp.route('/libri',methods=['GET'])
+@login_required
 def get_libri():
     libri = Libri.query.all()
     return render_template('libri.html',libri=libri)
 
 @libri_bp.route('/inserisci_libro',methods=['GET'])
+@login_required
 def inserisci_libro():
     autori = Autori.query.all()
     return render_template('gestione_libro.html',libro=None, autore=None,autori=autori)
 
 @libri_bp.route('/inserisci_libro',methods=['POST'])
+@login_required
 def insert_libro():
     
     titolo=request.form['titolo']    
@@ -52,6 +56,7 @@ def insert_libro():
     return redirect(url_for('libri.get_libri'))
 
 @libri_bp.route('/modifica_libri/<int:id>',methods=['GET'])
+@login_required
 def modifica_libri(id):
     libro = Libri.query.get_or_404(id)
     autore = Autori.query.get(libro.id_autore)
@@ -59,14 +64,27 @@ def modifica_libri(id):
     return render_template('gestione_libro.html',libro=libro, autore=autore,autori=autori)
 
 @libri_bp.route('/modifica_libri/<int:id>',methods=['POST'])
+@login_required
 def update_libro(id):
     libro = Libri.query.first_or_404(id) # Cerca l'utente per ID
 
      # Aggiorna i campi dell'utente    
-    libro.titolo=request.form['titolo'] 
-    
+    libro.titolo=request.form['titolo']    
     libro.isbn=request.form['isbn'] 
-    libro.anno_pubblicazione=request.form['anno_pubblicazione'] 
+    anno_pubblicazione=request.form['anno_pubblicazione'] 
+
+    # Verifica e conversione dell'anno di pubblicazione
+    if not anno_pubblicazione.strip():  # Se vuoto o spazi bianchi
+        anno_pubblicazione = None
+    else:
+        try:
+            anno_pubblicazione = int(anno_pubblicazione)  # Assicura che sia un numero
+        except ValueError:
+            flash("Errore: L'anno di pubblicazione deve essere un numero.", "danger")
+            return redirect(url_for('libri.modifica_libro', id=id))
+        
+    libro.anno_pubblicazione=anno_pubblicazione
+
     libro.copie_disponibili=request.form['copie_disponibili']
     nome = request.form.get('nome')
     cognome = request.form.get('cognome')
@@ -86,6 +104,7 @@ def update_libro(id):
     return redirect(url_for('libri.get_libri'))
 
 @libri_bp.route('/elimina_libro/<int:id>',methods=['DELETE'])
+@login_required
 def elimina_libro(id):
     libro = Libri.query.get_or_404(id)
     db.session.delete(libro)  # Elimina l'utente dal database
@@ -93,10 +112,12 @@ def elimina_libro(id):
     return jsonify({"message": "Libro eliminato con successo!"})
 
 @libri_bp.route('/cerca',methods=['GET'])
+@login_required
 def cerca():
     return render_template('cerca.html')
 
 @libri_bp.route('/find',methods=['GET'])
+@login_required
 def find():
     to_research = request.args['ricerca']
     tipoRicerca = request.args['flexRadioDefault']

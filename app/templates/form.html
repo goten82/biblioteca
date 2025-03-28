@@ -32,6 +32,16 @@
                             <li><a class="dropdown-item" href="/cerca">Cerca...</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Anagrafiche
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item disabled" href="/anagrafiche" di>Utenti</a></li>
+                            <li><a class="dropdown-item" href="/bibliotecari">Bibliotecari </a></li>
+                        </ul>
+                    </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="#">Prestiti</a>
@@ -39,6 +49,13 @@
                 </ul>
             </div>
         </div>
+
+        <p style="color: white;">Benvenuto, {{session.bibliotecario_nome}} {{session.bibliotecario_cognome}}!
+            <a class="navbar-brand" href="{{ url_for('auth.logout') }}">Logout</a>
+        </p>
+
+
+
     </nav>
     <!-- Content Section -->
     <div class="container mt-4">
